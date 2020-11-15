@@ -2,6 +2,7 @@ import {
   servicesFromFirebase,
   serviceFromFirebase,
   registerFirebase,
+  loginFirebase,
 } from 'api';
 import {
   FETCH_SERVICES_SUCCESS,
@@ -52,6 +53,14 @@ export const resetPreviousService = () => {
 export const register = async (registerFormData) => {
   try {
     await registerFirebase({ ...registerFormData });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const login = async (loginData) => {
+  try {
+    await loginFirebase(loginData);
   } catch (error) {
     throw error;
   }

@@ -1,7 +1,18 @@
-import React from 'react';
-import useForm from 'react-hook-form';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useToasts } from 'react-toast-notifications';
+import { Redirect } from 'react-router-dom';
 
 function Login() {
+  const { register, handleSubmit } = useForm();
+  const { addToast } = useToasts();
+  const [redirect, setRedirect] = useState(false);
+
+  const onLogin = (loginData) => {
+    console.log(loginData);
+  };
+
   return (
     <div className='auth-page'>
       <div className='container has-text-centered'>
@@ -12,15 +23,15 @@ function Login() {
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='Company logo' />
             </figure>
-            <form>
+            <form onSubmit={handleSubmit(onLogin)}>
               <div className='field'>
                 <div className='control'>
                   <input
+                    ref={register}
+                    name='email'
                     className='input is-large'
                     type='email'
                     placeholder='Your Email'
-                    autoFocus=''
-                    autoComplete='email'
                   />
                   <div className='form-error'>
                     <span className='help is-danger'>Email is required</span>
@@ -33,10 +44,11 @@ function Login() {
               <div className='field'>
                 <div className='control'>
                   <input
+                    ref={register}
+                    name='password'
                     className='input is-large'
                     type='password'
                     placeholder='Your Password'
-                    autoComplete='current-password'
                   />
                   <div className='form-error'>
                     <span className='help is-danger'>Password is required</span>

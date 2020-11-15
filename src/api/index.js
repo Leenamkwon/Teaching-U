@@ -55,3 +55,19 @@ export const registerFirebase = async ({
     // return promise.reject(errorMessage)
   }
 };
+
+export const loginFirebase = async ({ email, password }) => {
+  try {
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    if (errorCode === 'auth/wrong-password') {
+      throw new Error('비밀번호가 잘못되었습니다.');
+    } else {
+      throw errorMessage;
+    }
+  }
+};
+
+/* AUTH END */
