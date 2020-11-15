@@ -1,5 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/database';
+import 'firebase/auth';
+import 'firebase/storage';
+
+/* SERVICE */
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -12,9 +17,7 @@ const firebaseConfig = {
   measurementId: 'G-Y9VV3K1CZG',
 };
 
-const db = firebase.initializeApp(firebaseConfig).firestore();
+firebase.initializeApp(firebaseConfig);
+firebase.firestore();
 
-const { Timestamp } = firebase.firestore;
-export { Timestamp };
-
-export default db;
+export default firebase;
