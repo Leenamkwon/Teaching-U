@@ -3,22 +3,36 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
 import { Redirect } from 'react-router-dom';
+import { login } from 'actions';
 
 function Login() {
+  const [redirect, setRedirect] = useState(false);
   const { register, handleSubmit } = useForm();
   const { addToast } = useToasts();
-  const [redirect, setRedirect] = useState(false);
 
   const onLogin = (loginData) => {
-    console.log(loginData);
+    login(loginData)
+      .then((_) => {
+        console.log('hi');
+        setRedirect(true);
+      })
+      .catch((err) => {
+        addToast(err, {
+          appearance: 'error',
+          autoDismiss: true,
+          autoDismissTimeout: 3000,
+        });
+      });
   };
+
+  if (redirect) return <Redirect to='/' />;
 
   return (
     <div className='auth-page'>
       <div className='container has-text-centered'>
         <div className='column is-4 is-offset-4'>
-          <h3 className='title has-text-grey'>Login</h3>
-          <p className='subtitle has-text-grey'>Please login to proceed.</p>
+          <h3 className='title has-text-grey'>로그인</h3>
+          <p className='subtitle has-text-grey'>로그인을 진행 해주세요</p>
           <div className='box'>
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='Company logo' />
@@ -27,39 +41,34 @@ function Login() {
               <div className='field'>
                 <div className='control'>
                   <input
-                    ref={register}
+                    ref={register({
+                      required: true,
+                      // eslint-disable-next-line no-useless-escape
+                      pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    })}
                     name='email'
                     className='input is-large'
                     type='email'
-                    placeholder='Your Email'
+                    placeholder='이메일'
                   />
-                  <div className='form-error'>
-                    <span className='help is-danger'>Email is required</span>
-                    <span className='help is-danger'>
-                      Email address is not valid
-                    </span>
-                  </div>
                 </div>
               </div>
               <div className='field'>
                 <div className='control'>
                   <input
-                    ref={register}
+                    ref={register({ required: true })}
                     name='password'
                     className='input is-large'
                     type='password'
-                    placeholder='Your Password'
+                    placeholder='비밀번호'
                   />
-                  <div className='form-error'>
-                    <span className='help is-danger'>Password is required</span>
-                  </div>
                 </div>
               </div>
               <button
-                type='button'
+                type='submit'
                 className='button is-block is-info is-large is-fullwidth'
               >
-                Sign In
+                로그인
               </button>
             </form>
           </div>

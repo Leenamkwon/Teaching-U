@@ -22,7 +22,7 @@ function RegisterForm({ registerUser }) {
             name='email'
             className='input is-large'
             type='email'
-            placeholder='Your Email'
+            placeholder='이메일'
           />
           {errors.email && (
             <div className='form-error'>
@@ -45,7 +45,7 @@ function RegisterForm({ registerUser }) {
             name='fullName'
             className='input is-large'
             type='text'
-            placeholder='Full Name'
+            placeholder='이름'
           />
           {errors.fullName && (
             <div className='form-error'>
@@ -72,7 +72,7 @@ function RegisterForm({ registerUser }) {
             name='avatar'
             className='input is-large'
             type='text'
-            placeholder='Avatar'
+            placeholder='아바타'
           />
           {errors.avatar && (
             <div className='form-error'>
@@ -101,7 +101,7 @@ function RegisterForm({ registerUser }) {
             name='password'
             className='input is-large'
             type='password'
-            placeholder='Your Password'
+            placeholder='비밀번호'
           />
           {errors.password && (
             <div className='form-error'>
@@ -128,7 +128,7 @@ function RegisterForm({ registerUser }) {
             name='passwordConfirmation'
             className='input is-large'
             type='password'
-            placeholder='Repeat Password'
+            placeholder='비밀번호 확인'
           />
           {errors.passwordConfirmation && (
             <div className='form-error'>

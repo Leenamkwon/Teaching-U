@@ -61,10 +61,12 @@ export const loginFirebase = async ({ email, password }) => {
     await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (error) {
     const errorCode = error.code;
-    const errorMessage = error.message;
+    let errorMessage = error.message;
     if (errorCode === 'auth/wrong-password') {
-      throw new Error('비밀번호가 잘못되었습니다.');
+      errorMessage = '비밀번호가 맞지 않습니다.';
+      throw errorMessage;
     } else {
+      errorMessage = '없는 아이디 이거나 맞지 않습니다.';
       throw errorMessage;
     }
   }

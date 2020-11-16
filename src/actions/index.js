@@ -58,10 +58,6 @@ export const register = async (registerFormData) => {
   }
 };
 
-export const login = async (loginData) => {
-  try {
-    await loginFirebase(loginData);
-  } catch (error) {
-    throw error;
-  }
+export const login = (loginData) => {
+  return loginFirebase(loginData);
 };
