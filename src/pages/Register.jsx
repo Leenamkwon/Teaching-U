@@ -1,29 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
 import RegisterForm from 'components/auth/RegisterForm';
-import React, { useState } from 'react';
-import { register } from '../actions';
-import { useToasts } from 'react-toast-notifications';
-import { Redirect } from 'react-router-dom';
 
 function Register({ history }) {
-  const { addToast } = useToasts();
-  const [redirect, setRedirect] = useState(false);
-
-  const registerUser = async (userData) => {
-    try {
-      await register(userData);
-      setRedirect(true);
-    } catch (error) {
-      addToast(error, {
-        appearance: 'error',
-        autoDismiss: true,
-        autoDismissTimeout: 3000,
-      });
-    }
-  };
-
-  if (redirect) return <Redirect to='/' />;
-
   return (
     <div className='auth-page'>
       <div className='container has-text-centered'>
@@ -34,7 +13,6 @@ function Register({ history }) {
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='company logo' />
             </figure>
-            <RegisterForm registerUser={registerUser} />
           </div>
           <p className='has-text-grey'>
             <a>구글로 로그인하기</a>&nbsp;

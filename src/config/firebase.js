@@ -1,8 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/database';
-import 'firebase/auth';
-import 'firebase/storage';
+import firebase from 'config/app';
+import 'config/firestore';
+import 'config/database';
+import 'config/auth';
+import 'config/storage';
 
 /* SERVICE */
 

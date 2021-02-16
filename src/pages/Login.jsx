@@ -1,32 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useToasts } from 'react-toast-notifications';
-import { Redirect } from 'react-router-dom';
-import { login } from 'actions';
+import React from 'react';
 
 function Login() {
-  const [redirect, setRedirect] = useState(false);
-  const { register, handleSubmit } = useForm();
-  const { addToast } = useToasts();
-
-  const onLogin = (loginData) => {
-    login(loginData)
-      .then((_) => {
-        console.log('hi');
-        setRedirect(true);
-      })
-      .catch((err) => {
-        addToast(err, {
-          appearance: 'error',
-          autoDismiss: true,
-          autoDismissTimeout: 3000,
-        });
-      });
-  };
-
-  if (redirect) return <Redirect to='/' />;
-
   return (
     <div className='auth-page'>
       <div className='container has-text-centered'>
@@ -37,15 +12,15 @@ function Login() {
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='Company logo' />
             </figure>
-            <form onSubmit={handleSubmit(onLogin)}>
+            <form>
               <div className='field'>
                 <div className='control'>
                   <input
-                    ref={register({
-                      required: true,
-                      // eslint-disable-next-line no-useless-escape
-                      pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                    })}
+                    // ref={register({
+                    //   required: true,
+                    //   // eslint-disable-next-line no-useless-escape
+                    //   pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    // })}
                     name='email'
                     className='input is-large'
                     type='email'
@@ -56,7 +31,7 @@ function Login() {
               <div className='field'>
                 <div className='control'>
                   <input
-                    ref={register({ required: true })}
+                    // ref={register({ required: true })}
                     name='password'
                     className='input is-large'
                     type='password'
@@ -64,10 +39,7 @@ function Login() {
                   />
                 </div>
               </div>
-              <button
-                type='submit'
-                className='button is-block is-info is-large is-fullwidth'
-              >
+              <button type='submit' className='button is-block is-info is-large is-fullwidth'>
                 로그인
               </button>
             </form>
