@@ -1,5 +1,4 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
-
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -18,11 +17,7 @@ const Navbar = ({ id }) => {
           </Link>
 
           <a className='navbar-item is-hidden-desktop is-hidden-tablet'>
-            <div
-              id='menu-icon-wrapper'
-              className='menu-icon-wrapper'
-              style={{ visibility: 'visible' }}
-            >
+            <div id='menu-icon-wrapper' className='menu-icon-wrapper' style={{ visibility: 'visible' }}>
               <svg width='1000px' height='1000px'>
                 <path
                   className='path1'
@@ -34,10 +29,7 @@ const Navbar = ({ id }) => {
                   d='M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200'
                 ></path>
               </svg>
-              <button
-                id='menu-icon-trigger'
-                className='menu-icon-trigger'
-              ></button>
+              <button id='menu-icon-trigger' className='menu-icon-trigger'></button>
             </div>
           </a>
 
@@ -57,11 +49,7 @@ const Navbar = ({ id }) => {
         <div id='navbar-menu' className='navbar-menu is-static'>
           <div className='navbar-start'>
             <a className='navbar-item is-hidden-mobile'>
-              <div
-                id='menu-icon-wrapper'
-                className='menu-icon-wrapper'
-                style={{ visibility: 'visible' }}
-              >
+              <div id='menu-icon-wrapper' className='menu-icon-wrapper' style={{ visibility: 'visible' }}>
                 <svg width='1000px' height='1000px'>
                   <path
                     className='path1'
@@ -73,10 +61,7 @@ const Navbar = ({ id }) => {
                     d='M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200'
                   ></path>
                 </svg>
-                <button
-                  id='menu-icon-trigger'
-                  className='menu-icon-trigger'
-                ></button>
+                <button id='menu-icon-trigger' className='menu-icon-trigger'></button>
               </div>
             </a>
           </div>
@@ -100,17 +85,11 @@ const Navbar = ({ id }) => {
                 <a className='navbar-item'>Dropdown item</a>
               </div>
             </div>
-            <Link
-              to='/login'
-              className='navbar-item is-secondary modal-trigger'
-              data-modal='auth-modal'
-            >
+            <Link to='/login' className='navbar-item is-secondary modal-trigger' data-modal='auth-modal'>
               로그인
             </Link>
             <Link to='/register' className='navbar-item'>
-              <span className='button signup-button rounded secondary-btn raised'>
-                회원 가입
-              </span>
+              <span className='button signup-button rounded secondary-btn raised'>회원 가입</span>
             </Link>
           </div>
         </div>

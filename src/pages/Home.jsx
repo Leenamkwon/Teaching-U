@@ -1,7 +1,19 @@
+import { getServices } from 'assets/sampleData';
 import Hero from 'components/Hero';
-import React from 'react';
+import ServiceItem from 'components/service/ServiceItem';
+import React, { useEffect, useState } from 'react';
 
 function Home() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    setServices(getServices());
+  }, []);
+
+  function renderService() {
+    return services.map((service) => <ServiceItem service={service} />);
+  }
+
   return (
     <>
       <Hero />
@@ -14,7 +26,7 @@ function Home() {
           </div>
 
           <div className='content-wrapper'>
-            <div className='columns'>{}</div>
+            <div className='columns'>{renderService()}</div>
           </div>
         </div>
       </section>

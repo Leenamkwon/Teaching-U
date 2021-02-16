@@ -6,7 +6,7 @@ import Routes from 'Routes';
 function ServiceApp() {
   return (
     <>
-      <Navbar id='' />
+      <Navbar id={null} />
       <Navbar id='navbar-clone' />
       <Sidebar />
       <Routes />

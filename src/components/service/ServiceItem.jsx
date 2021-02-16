@@ -16,7 +16,7 @@ function ServiceItem({ service }) {
         data-animation='fadeInLeft'
       >
         <div className='card-title'>
-          <h4>App builder</h4>
+          <h4>{service.title}</h4>
         </div>
         <div className='card-icon'>
           <img src={service.image} alt='' />
@@ -25,10 +25,7 @@ function ServiceItem({ service }) {
           <p>{shortText(service.description)}</p>
         </div>
         <div className='card-action'>
-          <Link
-            to={`/services/${service.id}`}
-            className='button btn-align-md accent-btn raised'
-          >
+          <Link to={`/services/${service.id}`} className='button btn-align-md accent-btn raised'>
             Lean more
           </Link>
         </div>
