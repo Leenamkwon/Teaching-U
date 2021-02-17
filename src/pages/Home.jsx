@@ -1,4 +1,4 @@
-import { fetchService } from 'actions/serviceActions';
+import { fetchServices } from 'actions/serviceActions';
 import Hero from 'components/Hero';
 import ServiceItem from 'components/service/ServiceItem';
 import React, { useEffect } from 'react';
@@ -9,7 +9,7 @@ function Home() {
   const { services } = useSelector((state) => state.service);
 
   useEffect(() => {
-    dispatch(fetchService());
+    dispatch(fetchServices());
   }, [dispatch]);
 
   function renderService() {

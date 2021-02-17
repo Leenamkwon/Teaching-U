@@ -1,31 +1,46 @@
-import { FETCH_SERVICES } from './serviceActionsConstants';
+import {
+  CLEAR_SERVICE,
+  FETCH_SERVICES_SUCCESS,
+  FETCH_SERVICE_SUCCESS,
+  REQUEST_SERVICE,
+} from './serviceActionsConstants';
+import { listenToService, listenToSelectService } from 'firestore/firestoreService';
 
-const services = [
-  {
-    id: '2asd8sa7d98',
-    user: 'some_id_1',
-    category: 'mathematics',
-    title: 'I will teach you math fast!',
-    description: 'I am teaching highschool mathematics, algebra, triogometry. I can teach you anything!',
-    price: 10, //per hour
-    image:
-      'https://images.unsplash.com/photo-1535551951406-a19828b0a76b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    id: 'ssa9d789as7',
-    user: 'some_id_2',
-    category: 'programming',
-    title: 'I will teach you Programming fast!',
-    description: 'I am teaching C++, C#, JS ...',
-    price: 10, //per hour
-    image:
-      'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-];
-
-export const fetchService = () => {
-  return {
-    type: FETCH_SERVICES,
-    payload: services,
+export const fetchServices = () => {
+  return async function (dispatch) {
+    try {
+      const services = await listenToService();
+      dispatch({
+        type: FETCH_SERVICES_SUCCESS,
+        payload: services,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
+
+export function fetchSelectedService(id) {
+  return async function (dispatch, getState) {
+    const { service } = getState();
+    if (service.selectedService.id === id) return;
+    dispatch(requestService());
+    try {
+      const selectedService = await listenToSelectService(id);
+      dispatch({
+        type: FETCH_SERVICE_SUCCESS,
+        payload: selectedService,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function requestService() {
+  return { type: REQUEST_SERVICE };
+}
+
+export function resetPreviousService() {
+  return { type: CLEAR_SERVICE };
+}
