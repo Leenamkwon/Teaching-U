@@ -1,17 +1,19 @@
-import { getServices } from 'assets/sampleData';
+import { fetchService } from 'actions/serviceActions';
 import Hero from 'components/Hero';
 import ServiceItem from 'components/service/ServiceItem';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Home() {
-  const [services, setServices] = useState([]);
+  const dispatch = useDispatch();
+  const { services } = useSelector((state) => state.service);
 
   useEffect(() => {
-    setServices(getServices());
-  }, []);
+    dispatch(fetchService());
+  }, [dispatch]);
 
   function renderService() {
-    return services.map((service) => <ServiceItem service={service} />);
+    return services.map((service) => <ServiceItem service={service} key={service.id} />);
   }
 
   return (
@@ -35,5 +37,3 @@ function Home() {
 }
 
 export default Home;
-
-// 멀티 = true, false 조건 하나만, 한개만 인덱스랑 선택인덱스랑 비교

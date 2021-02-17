@@ -3,9 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { configureStore } from 'store/configureStore';
 
 function render() {
-  return ReactDOM.render(<App />, document.getElementById('root'));
+  return ReactDOM.render(
+    <Provider store={configureStore()}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  );
 }
 
 if (module.hot) {
