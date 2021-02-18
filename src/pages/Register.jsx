@@ -13,6 +13,7 @@ function Register({ history }) {
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='company logo' />
             </figure>
+            <RegisterForm />
           </div>
           <p className='has-text-grey'>
             <a>구글로 로그인하기</a>&nbsp;
