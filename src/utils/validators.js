@@ -4,7 +4,6 @@ export const isValidImage = (value) => {
 
   const validFormats = ['png', 'jpeg', 'jpg', 'svg'];
   const extensition = value.toLowerCase().split('.').pop();
-
   return validFormats.includes(extensition);
 };
 

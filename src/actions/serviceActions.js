@@ -4,7 +4,7 @@ import {
   FETCH_SERVICE_SUCCESS,
   REQUEST_SERVICE,
 } from './serviceActionsConstants';
-import { listenToService, listenToSelectService } from 'firestore/firestoreService';
+import { listenToService, listenToSelectService, registerFirebase } from 'firestore/firestoreService';
 
 export const fetchServices = () => {
   return async function (dispatch) {
@@ -43,4 +43,14 @@ export function requestService() {
 
 export function resetPreviousService() {
   return { type: CLEAR_SERVICE };
+}
+
+export function register(payload) {
+  return async function (dispatch) {
+    try {
+      await registerFirebase(payload);
+    } catch (error) {
+      throw error;
+    }
+  };
 }

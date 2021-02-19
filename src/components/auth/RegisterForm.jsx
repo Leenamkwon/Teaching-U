@@ -1,36 +1,32 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { isValidImage, isValidUrl, sameAs } from 'utils/validators';
+/* eslint no-useless-escape: 0 */
 
-function RegisterForm({ registerUser }) {
+import React from 'react';
+import { isValidImage, sameAs, isValidUrl } from '../../utils/validators';
+import { useForm } from 'react-hook-form';
+
+const RegisterForm = ({ registerUser, error }) => {
   const { register, handleSubmit, errors, getValues } = useForm();
 
-  const getFormData = (data) => {
-    registerUser(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(getFormData)}>
+    <form onSubmit={handleSubmit(registerUser)}>
       <div className='field'>
         <div className='control'>
           <input
             ref={register({
               required: true,
-              // eslint-disable-next-line no-useless-escape
-              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+              pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name='email'
             className='input is-large'
             type='email'
-            placeholder='이메일'
+            placeholder='Your Email'
+            autoComplete='email'
           />
           {errors.email && (
             <div className='form-error'>
-              {errors.email.type === 'required' && (
-                <span className='help is-danger'>이메일은 필수입니다.</span>
-              )}
+              {errors.email.type === 'required' && <span className='help is-danger'>Email is required</span>}
               {errors.email.type === 'pattern' && (
-                <span className='help is-danger'>유효하지 않은 이메일 입니다.</span>
+                <span className='help is-danger'>Email address is not valid</span>
               )}
             </div>
           )}
@@ -39,19 +35,19 @@ function RegisterForm({ registerUser }) {
       <div className='field'>
         <div className='control'>
           <input
-            ref={register({ required: true, minLength: 2 })}
+            ref={register({ required: true, minLength: 10 })}
             name='fullName'
             className='input is-large'
             type='text'
-            placeholder='이름'
+            placeholder='Full Name'
           />
           {errors.fullName && (
             <div className='form-error'>
               {errors.fullName.type === 'required' && (
-                <span className='help is-danger'>이름은 필수입니다.</span>
+                <span className='help is-danger'>Name is required</span>
               )}
               {errors.fullName.type === 'minLength' && (
-                <span className='help is-danger'>이름은 최소 2자리 이상이여야 합니다.</span>
+                <span className='help is-danger'>Minimum length is 10 characters</span>
               )}
             </div>
           )}
@@ -60,28 +56,22 @@ function RegisterForm({ registerUser }) {
       <div className='field'>
         <div className='control'>
           <input
-            ref={register({
-              required: true,
-              // eslint-disable-next-line no-useless-escape
-              validate: { isValidImage, isValidUrl },
-            })}
+            ref={register({ required: true, validate: { isValidImage, isValidUrl } })}
             name='avatar'
             className='input is-large'
             type='text'
-            placeholder='아바타'
+            placeholder='Avatar'
           />
           {errors.avatar && (
             <div className='form-error'>
               {errors.avatar.type === 'required' && (
-                <span className='help is-danger'>아바타는 필수입니다.</span>
+                <span className='help is-danger'>Avatar is required</span>
               )}
               {errors.avatar.type === 'isValidImage' && (
-                <span className='help is-danger'>
-                  확장자가 유효하지 않습니다. jpg, jpeg, svg, png파일을 올려주세요.
-                </span>
+                <span className='help is-danger'>Avatar extenstion is not valid</span>
               )}
               {errors.avatar.type === 'isValidUrl' && (
-                <span className='help is-danger'>url주소가 유효하지 않습니다.</span>
+                <span className='help is-danger'>Avatar url is not valid</span>
               )}
             </div>
           )}
@@ -94,15 +84,16 @@ function RegisterForm({ registerUser }) {
             name='password'
             className='input is-large'
             type='password'
-            placeholder='비밀번호'
+            placeholder='Your Password'
+            autoComplete='current-password'
           />
           {errors.password && (
             <div className='form-error'>
               {errors.password.type === 'required' && (
-                <span className='help is-danger'>비밀번호는 필수입니다.</span>
+                <span className='help is-danger'>Password is required</span>
               )}
               {errors.password.type === 'minLength' && (
-                <span className='help is-danger'>비밀번호는 최소 6자리 이상이여야 합니다.</span>
+                <span className='help is-danger'>Minimum length is 6 characters</span>
               )}
             </div>
           )}
@@ -119,25 +110,30 @@ function RegisterForm({ registerUser }) {
             name='passwordConfirmation'
             className='input is-large'
             type='password'
-            placeholder='비밀번호 확인'
+            placeholder='Repeat Password'
+            autoComplete='current-password'
           />
           {errors.passwordConfirmation && (
             <div className='form-error'>
               {errors.passwordConfirmation.type === 'required' && (
-                <span className='help is-danger'>비밀번호와 맞지 않습니다.</span>
+                <span className='help is-danger'>Password confirmation is required</span>
+              )}
+              {errors.passwordConfirmation.type === 'minLength' && (
+                <span className='help is-danger'>Minimum length is 6 characters</span>
               )}
               {errors.passwordConfirmation.type === 'sameAs' && (
-                <span className='help is-danger'>비밀번호는 최소 6자리 이상이여야 합니다.</span>
+                <span className='help is-danger'>Password confirmation is not the same as password</span>
               )}
             </div>
           )}
         </div>
       </div>
+      {error && <span className='help is-danger'>{error.message}</span>}
       <button type='submit' className='button is-block is-info is-large is-fullwidth'>
-        가입하기
+        Register
       </button>
     </form>
   );
-}
+};
 
 export default RegisterForm;

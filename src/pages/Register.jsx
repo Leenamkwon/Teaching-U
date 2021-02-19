@@ -1,8 +1,29 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState } from 'react';
 import RegisterForm from 'components/auth/RegisterForm';
+import { useDispatch } from 'react-redux';
+import { register } from 'actions/serviceActions';
+import { useToasts } from 'react-toast-notifications';
+import { useHistory } from 'react-router-dom';
 
-function Register({ history }) {
+function Register() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
+  const [error, setErrors] = useState('');
+
+  const registerUser = (userData) => {
+    dispatch(register(userData))
+      .then((_) => {
+        console.log('hi');
+        history.push('/');
+      })
+      .catch((error) => {
+        setErrors(error.message);
+        addToast(error.message, { appearance: 'error', autoDismiss: true });
+      });
+  };
+
   return (
     <div className='auth-page'>
       <div className='container has-text-centered'>
@@ -13,7 +34,7 @@ function Register({ history }) {
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='company logo' />
             </figure>
-            <RegisterForm />
+            <RegisterForm registerUser={registerUser} error={error} />
           </div>
           <p className='has-text-grey'>
             <a>구글로 로그인하기</a>&nbsp;
