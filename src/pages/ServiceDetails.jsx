@@ -14,6 +14,7 @@ function ServiceDetails() {
     dispatch(fetchSelectedService(serviceId));
   }, [serviceId, dispatch]);
 
+  // loading...
   if (loading || !selectedService) return <Spinner />;
 
   return (
