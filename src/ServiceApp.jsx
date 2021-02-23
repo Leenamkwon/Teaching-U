@@ -9,7 +9,6 @@ function ServiceApp() {
       <Navbar id={null} />
       <Navbar id='navbar-clone' />
       <Sidebar />
-      <Routes />
     </>
   );
 }

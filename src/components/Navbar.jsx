@@ -83,15 +83,20 @@ const Navbar = ({ id }) => {
             <Link to='/faq' className='navbar-item is-secondary'>
               FaQ
             </Link>
-            <div className='navbar-item has-dropdown is-hoverable'>
-              <a className='navbar-link'>Dropdown</a>
+            {authenticated && (
+              <div className='navbar-item has-dropdown is-hoverable'>
+                <a className='navbar-link'>관리</a>
 
-              <div className='navbar-dropdown'>
-                <a className='navbar-item'>Dropdown item</a>
-                <a className='navbar-item'>Dropdown item</a>
-                <a className='navbar-item'>Dropdown item</a>
+                <div className='navbar-dropdown'>
+                  <Link className='navbar-item' to='/services/new'>
+                    Create Service
+                  </Link>
+                  <Link className='navbar-item' to='/services/me'>
+                    Your Services
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
             {!authenticated && (
               <>
                 <Link to='/login' className='navbar-item is-secondary modal-trigger' data-modal='auth-modal'>

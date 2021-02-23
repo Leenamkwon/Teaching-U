@@ -3,6 +3,10 @@ import firebase from 'config/firebase';
 
 const db = firebase.firestore();
 
+///////////////////
+//----------------- SERVICE -----------------
+//////////////////
+
 export async function listenToService() {
   const services = await db.collection('services').get();
   const serviceDataFromFirestore = services.docs.map((item) => ({ id: item.id, ...item.data() }));
@@ -12,6 +16,16 @@ export async function listenToService() {
 export async function listenToSelectService(id) {
   const service = await db.collection('services').doc(id).get();
   return { id: service.id, ...service.data() };
+}
+
+export async function listenToUserService() {
+  const uid = firebase.auth().currentUser.uid;
+  try {
+    const snapshot = await db.collection('services').where('hostedId', '==', uid).get();
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function createServiceFirebase(newService) {
@@ -44,7 +58,8 @@ export const getUserProfile = ({ uid, dispatch }) => {
     .doc(uid)
     .onSnapshot((snapshot) => {
       if (!snapshot.exists) return;
-      dispatch(snapshot.data());
+      dispatch(signInUser(snapshot.data()));
+      dispatch({ type: 'APP_LOADED' });
     });
 };
 

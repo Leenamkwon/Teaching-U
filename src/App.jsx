@@ -4,6 +4,7 @@ import { ToastProvider } from 'react-toast-notifications';
 import ServiceApp from 'ServiceApp';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'components/Spinner';
+import Routes from 'Routes';
 
 function App() {
   const { initialLoad } = useSelector((state) => state.auth);
@@ -14,12 +15,13 @@ function App() {
     return unscribe;
   }, [dispatch]);
 
-  if (initialLoad) return <Spinner />;
+  if (!initialLoad) return <Spinner />;
 
   return (
     <>
       <ToastProvider>
         <ServiceApp />
+        <Routes />
       </ToastProvider>
     </>
   );

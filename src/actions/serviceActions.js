@@ -5,7 +5,12 @@ import {
   FETCH_SERVICE_SUCCESS,
   REQUEST_SERVICE,
 } from './serviceActionsConstants';
-import { listenToService, listenToSelectService, createServiceFirebase } from 'firestore/firestoreService';
+import {
+  listenToService,
+  listenToSelectService,
+  createServiceFirebase,
+  listenToUserService,
+} from 'firestore/firestoreService';
 
 export function requestService() {
   return { type: REQUEST_SERVICE };
@@ -19,7 +24,7 @@ export function endService() {
   return { type: END_SERVICE };
 }
 
-export const fetchServices = () => {
+export function fetchServices() {
   return async function (dispatch, getState) {
     const { service: serviceReducer } = getState();
     try {
@@ -34,7 +39,18 @@ export const fetchServices = () => {
       console.log(error);
     }
   };
-};
+}
+
+export function fetchUserServices(params) {
+  return async function (dispatch) {
+    try {
+      const data = await listenToUserService();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 export function fetchSelectedService(id) {
   return async function (dispatch, getState) {
