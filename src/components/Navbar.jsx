@@ -1,8 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signoutFirebase } from 'firestore/firestoreService';
 
 const Navbar = ({ id }) => {
+  const { currentUser, authenticated } = useSelector((state) => state.auth);
+
   return (
     <nav
       className='navbar is-fresh is-transparent no-shadow'
@@ -67,6 +71,9 @@ const Navbar = ({ id }) => {
           </div>
 
           <div className='navbar-end'>
+            {authenticated && (
+              <div className='navbar-item is-secondary user-welcome'>{`Hi ${currentUser.fullName}`}</div>
+            )}
             <Link to='/' className='navbar-item is-secondary'>
               홈
             </Link>
@@ -85,12 +92,21 @@ const Navbar = ({ id }) => {
                 <a className='navbar-item'>Dropdown item</a>
               </div>
             </div>
-            <Link to='/login' className='navbar-item is-secondary modal-trigger' data-modal='auth-modal'>
-              로그인
-            </Link>
-            <Link to='/register' className='navbar-item'>
-              <span className='button signup-button rounded secondary-btn raised'>회원 가입</span>
-            </Link>
+            {!authenticated && (
+              <>
+                <Link to='/login' className='navbar-item is-secondary modal-trigger' data-modal='auth-modal'>
+                  로그인
+                </Link>
+                <Link to='/register' className='navbar-item'>
+                  <span className='button signup-button rounded secondary-btn raised'>회원 가입</span>
+                </Link>
+              </>
+            )}
+            {authenticated && (
+              <div onClick={signoutFirebase}>
+                <span className='button signup-button is-danger rounded raised'>Logout</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

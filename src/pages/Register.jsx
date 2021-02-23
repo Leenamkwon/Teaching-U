@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import RegisterForm from 'components/auth/RegisterForm';
 import { useDispatch } from 'react-redux';
-import { register } from 'actions/serviceActions';
+import { register } from 'actions/authAction';
 import { useToasts } from 'react-toast-notifications';
 import { useHistory } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ function Register() {
   const registerUser = (userData) => {
     dispatch(register(userData))
       .then((_) => {
-        console.log('hi');
         history.push('/');
       })
       .catch((error) => {

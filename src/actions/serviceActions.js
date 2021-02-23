@@ -4,7 +4,7 @@ import {
   FETCH_SERVICE_SUCCESS,
   REQUEST_SERVICE,
 } from './serviceActionsConstants';
-import { listenToService, listenToSelectService, registerFirebase } from 'firestore/firestoreService';
+import { listenToService, listenToSelectService } from 'firestore/firestoreService';
 
 export const fetchServices = () => {
   return async function (dispatch) {
@@ -23,7 +23,7 @@ export const fetchServices = () => {
 export function fetchSelectedService(id) {
   return async function (dispatch, getState) {
     const { service } = getState();
-    if (service.selectedService.id === id) return;
+    if (service.selectedService?.id === id) return;
     dispatch(requestService());
     try {
       const selectedService = await listenToSelectService(id);
@@ -43,14 +43,4 @@ export function requestService() {
 
 export function resetPreviousService() {
   return { type: CLEAR_SERVICE };
-}
-
-export function register(payload) {
-  return async function (dispatch) {
-    try {
-      await registerFirebase(payload);
-    } catch (error) {
-      throw error;
-    }
-  };
 }

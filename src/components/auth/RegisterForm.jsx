@@ -1,5 +1,4 @@
 /* eslint no-useless-escape: 0 */
-
 import React from 'react';
 import { isValidImage, sameAs, isValidUrl } from '../../utils/validators';
 import { useForm } from 'react-hook-form';

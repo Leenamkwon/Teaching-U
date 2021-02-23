@@ -16,6 +16,5 @@ import rootReducer from './rootReducer';
 
 export function configureStore() {
   const store = createStore(rootReducer(), composeWithDevTools(applyMiddleware(thunk)));
-  // store.dispatch = addLoggerToDispatch(store);
   return store;
 }

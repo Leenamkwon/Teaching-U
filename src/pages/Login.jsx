@@ -1,7 +1,28 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import { loginFirebase } from 'firestore/firestoreService';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Redirect } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 
 function Login() {
+  const { register, handleSubmit } = useForm();
+  const [redirect, setRedirect] = useState(false);
+  const [error, setError] = useState(null);
+  const { addToast } = useToasts();
+
+  const onLogin = async (creds) => {
+    try {
+      await loginFirebase(creds.email, creds.password);
+      setRedirect(true);
+    } catch (error) {
+      setError(error.message);
+      addToast(error.message, { appearance: 'error', autoDismiss: true });
+    }
+  };
+
+  if (redirect) return <Redirect to='/' />;
+
   return (
     <div className='auth-page'>
       <div className='container has-text-centered'>
@@ -12,15 +33,14 @@ function Login() {
             <figure className='avatar'>
               <img src='https://placehold.it/128x128' alt='Company logo' />
             </figure>
-            <form>
+            <form onSubmit={handleSubmit(onLogin)}>
               <div className='field'>
                 <div className='control'>
                   <input
-                    // ref={register({
-                    //   required: true,
-                    //   // eslint-disable-next-line no-useless-escape
-                    //   pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                    // })}
+                    ref={register({
+                      required: true,
+                      pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    })}
                     name='email'
                     className='input is-large'
                     type='email'
@@ -31,7 +51,7 @@ function Login() {
               <div className='field'>
                 <div className='control'>
                   <input
-                    // ref={register({ required: true })}
+                    ref={register({ required: true })}
                     name='password'
                     className='input is-large'
                     type='password'
@@ -39,6 +59,11 @@ function Login() {
                   />
                 </div>
               </div>
+              {error && (
+                <div className='form-error'>
+                  <span style={{ color: 'red' }}>{error.message}</span>
+                </div>
+              )}
               <button type='submit' className='button is-block is-info is-large is-fullwidth'>
                 로그인
               </button>
