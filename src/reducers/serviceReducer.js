@@ -1,5 +1,5 @@
 import {
-  CLEAR_SERVICE,
+  // CLEAR_SERVICE,
   FETCH_SERVICES_SUCCESS,
   FETCH_SERVICE_SUCCESS,
 } from 'actions/serviceActionsConstants';
@@ -12,8 +12,8 @@ export default function serviceReducer(state = initialState, { type, payload }) 
       return { ...state, services: payload };
     case FETCH_SERVICE_SUCCESS:
       return { ...state, selectedService: payload };
-    case CLEAR_SERVICE:
-      return { ...state, selectedService: null };
+    // case CLEAR_SERVICE:
+    //   return { ...state, selectedService: null };
     default:
       return { ...state };
   }

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { fetchSelectedService } from 'actions/serviceActions';
 import Spinner from 'components/Spinner';
 
@@ -8,14 +8,16 @@ function ServiceDetails() {
   const dispatch = useDispatch();
   const { serviceId } = useParams();
   const { selectedService } = useSelector((state) => state.service);
-  const loading = useSelector((state) => state.async);
+  const { loading, error } = useSelector((state) => state.async);
 
   useEffect(() => {
     dispatch(fetchSelectedService(serviceId));
   }, [serviceId, dispatch]);
 
+  // not found 404
+  if (error && !selectedService) return <Redirect to='/' />;
   // loading...
-  if (loading || !selectedService) return <Spinner />;
+  if ((loading && !error) || !selectedService) return <Spinner />;
 
   return (
     <>

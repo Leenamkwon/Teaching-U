@@ -14,6 +14,12 @@ export async function listenToSelectService(id) {
   return { id: service.id, ...service.data() };
 }
 
+export async function createServiceFirebase(newService) {
+  const uid = firebase.auth().currentUser.uid;
+  const docRef = await db.collection('services').add({ ...newService, hostedId: uid });
+  return docRef.id;
+}
+
 ///////////////////
 //----------------- AUTH -----------------
 //////////////////

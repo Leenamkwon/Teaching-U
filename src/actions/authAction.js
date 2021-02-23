@@ -1,6 +1,7 @@
 import { registerFirebase, getUserProfile } from '../firestore/firestoreService';
 import { SIGN_IN_USER, SIGN_OUT_USER } from './authConstants';
 import firebase from '../config/firebase';
+import { endService, requestService } from './serviceActions';
 
 // NOT ACTIONS
 export function register(payload) {
@@ -27,6 +28,7 @@ export function verifyAuth() {
         } else {
           dispatch(signOutUser());
         }
+        dispatch({ type: 'APP_LOADED' });
       },
       (error) => console.log(error)
     );

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { verifyAuth } from 'actions/authAction';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 import ServiceApp from 'ServiceApp';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from 'components/Spinner';
 
 function App() {
+  const { initialLoad } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,13 +14,13 @@ function App() {
     return unscribe;
   }, [dispatch]);
 
+  if (initialLoad) return <Spinner />;
+
   return (
     <>
-      <Router>
-        <ToastProvider>
-          <ServiceApp />
-        </ToastProvider>
-      </Router>
+      <ToastProvider>
+        <ServiceApp />
+      </ToastProvider>
     </>
   );
 }
