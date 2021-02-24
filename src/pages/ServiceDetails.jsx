@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 import { fetchSelectedService } from 'actions/serviceActions';
 import Spinner from 'components/Spinner';
+import OffserModal from 'components/service/OffserModal';
 
 function ServiceDetails() {
   const dispatch = useDispatch();
@@ -27,16 +28,20 @@ function ServiceDetails() {
             <div className='columns is-vcentered'>
               <div className='column is-5'>
                 <figure className='image is-4by3'>
-                  <img src={selectedService.image} alt='Description' />
+                  <img
+                    src={selectedService.image || '/logo512.png'}
+                    alt='Description'
+                    style={{ objectFit: 'cover' }}
+                  />
                 </figure>
               </div>
               <div className='column is-6 is-offset-1'>
                 <h1 className='title is-2'>{selectedService.title}</h1>
                 <h2 className='subtitle is-4'>{selectedService.description}</h2>
                 <br />
-                <p className='has-text-centered'>
-                  <button className='button is-medium is-info is-outlined'>Learn more</button>
-                </p>
+                <div className='has-text-centered'>
+                  <OffserModal service={selectedService} />
+                </div>
               </div>
             </div>
           </div>

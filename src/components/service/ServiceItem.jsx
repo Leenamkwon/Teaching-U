@@ -19,7 +19,7 @@ function ServiceItem({ service }) {
           <h4>{service.title}</h4>
         </div>
         <div className='card-icon'>
-          <img src={service.image.length > 5 ? service.image : 'logo192.png'} alt='' />
+          <img src={service.image.length > 5 ? service.image : '/logo192.png'} alt={service.title} />
         </div>
         <div className='card-text'>
           <p>{shortText(service.description)}</p>

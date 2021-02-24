@@ -18,6 +18,7 @@ export async function listenToSelectService(id) {
   return { id: service.id, ...service.data() };
 }
 
+// USER SERVICE
 export async function listenToUserService() {
   const uid = firebase.auth().currentUser.uid;
   try {

@@ -5,12 +5,7 @@ import {
   FETCH_SERVICE_SUCCESS,
   REQUEST_SERVICE,
 } from './serviceActionsConstants';
-import {
-  listenToService,
-  listenToSelectService,
-  createServiceFirebase,
-  listenToUserService,
-} from 'firestore/firestoreService';
+import { listenToService, listenToSelectService, createServiceFirebase } from 'firestore/firestoreService';
 
 export function requestService() {
   return { type: REQUEST_SERVICE };
@@ -36,17 +31,6 @@ export function fetchServices() {
       });
     } catch (error) {
       dispatch(errorService(error));
-      console.log(error);
-    }
-  };
-}
-
-export function fetchUserServices(params) {
-  return async function (dispatch) {
-    try {
-      const data = await listenToUserService();
-      console.log(data);
-    } catch (error) {
       console.log(error);
     }
   };
