@@ -1,4 +1,5 @@
-import { registerFirebase, getUserProfile } from '../firestore/firestoreService';
+import { registerFirebase } from '../firestore/firebaseService';
+import { getUserProfile } from '../firestore/firestoreService';
 import { APP_LOADED, SIGN_IN_USER, SIGN_OUT_USER } from './authConstants';
 import firebase from '../config/firebase';
 

@@ -5,6 +5,7 @@ import {
   FETCH_SERVICE_SUCCESS,
   REQUEST_SERVICE,
 } from './serviceActionsConstants';
+import firebase from '../config/firebase';
 import { listenToService, listenToSelectService, createServiceFirebase } from 'firestore/firestoreService';
 
 export function requestService() {
@@ -39,14 +40,20 @@ export function fetchServices() {
 export function fetchSelectedService(id) {
   return async function (dispatch, getState) {
     const { service } = getState();
-    if (service.selectedService?.id === id) return dispatch({ type: END_SERVICE });
+    if (service.selectedService?.id === id) return;
     dispatch(requestService());
     try {
       const selectedService = await listenToSelectService(id);
+      const selectedServiceUser = await firebase
+        .firestore()
+        .collection('user')
+        .doc(selectedService.hostedId)
+        .get();
       dispatch({
         type: FETCH_SERVICE_SUCCESS,
-        payload: selectedService,
+        payload: { ...selectedService, serviceByUser: selectedServiceUser.data() },
       });
+      dispatch(endService());
     } catch (error) {
       dispatch(errorService(error));
       console.log(error);

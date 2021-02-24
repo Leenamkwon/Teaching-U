@@ -40,7 +40,7 @@ function ServiceDetails() {
                 <h2 className='subtitle is-4'>{selectedService.description}</h2>
                 <br />
                 <div className='has-text-centered'>
-                  <OffserModal service={selectedService} />
+                  <OffserModal service={selectedService} serviceByUser={selectedService?.serviceByUser} />
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { loginFirebase } from 'firestore/firestoreService';
+import { loginFirebase } from 'firestore/firebaseService';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';

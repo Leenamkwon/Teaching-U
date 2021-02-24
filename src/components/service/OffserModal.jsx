@@ -1,7 +1,7 @@
 import Modal from 'components/common/Modal';
 import React, { useState } from 'react';
 
-export default function OffserModal({ service }) {
+export default function OffserModal({ service, serviceByUser }) {
   const [offer, setOffer] = useState({
     fromUser: '',
     toUser: '',
@@ -53,7 +53,9 @@ export default function OffserModal({ service }) {
         <p className='help'>Enter time in hours</p>
       </div>
       <div className='service-price has-text-centered'>
-        <div className='service-price-title'>Uppon acceptance "Filip Jerga" will charge you:</div>
+        <div className='service-price-title'>{`Uppon acceptance ${
+          serviceByUser?.fullName || 'Bot'
+        } will charge you:`}</div>
         <div className='service-price-value'>
           <h1 className='title'>{offer.price}</h1>
         </div>
