@@ -51,3 +51,11 @@ export const getUserProfile = ({ uid, dispatch }) => {
       dispatch({ type: 'APP_LOADED' });
     });
 };
+
+/* 
+
+OFFER
+
+*/
+
+export const createOfferFirebase = (offer) => db.collection('offers').add(offer);

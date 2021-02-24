@@ -1,15 +1,20 @@
+import { createOffer } from 'actions/offerAction';
 import Modal from 'components/common/Modal';
+import { createRef } from 'firestore/firestoreService';
 import React, { useState } from 'react';
+import { useToasts } from 'react-toast-notifications';
 
-export default function OffserModal({ service, serviceByUser }) {
+export default React.memo(function OffserModal({ service, serviceByUser, currentUser }) {
+  const { addToast } = useToasts();
+  const [loading, setLoading] = useState(false);
   const [offer, setOffer] = useState({
     fromUser: '',
     toUser: '',
-    serviceId: '',
+    service: '',
     status: 'pending',
-    price: 0,
-    time: 0,
     note: '',
+    time: 0,
+    price: 0,
   });
 
   function handleChange({ target: { value, name } }) {
@@ -20,12 +25,24 @@ export default function OffserModal({ service, serviceByUser }) {
     return setOffer((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit() {
-    alert(JSON.stringify(offer));
+  async function handleSubmit() {
+    const offerCopy = { ...offer };
+    setLoading(true);
+    try {
+      offerCopy.fromUser = createRef('user', currentUser.uid);
+      offerCopy.toUser = createRef('user', service.hostedId);
+      offerCopy.service = createRef('services', service.id);
+      await createOffer(offerCopy);
+      addToast('Offer Success', { appearance: 'success', autoDismiss: true });
+      setLoading(false);
+    } catch (error) {
+      addToast(error.message, { appearance: 'error', autoDismiss: true });
+      setLoading(false);
+    }
   }
 
   return (
-    <Modal onModalSubmit={handleSubmit} openButtonText='Make an Offer'>
+    <Modal onModalSubmit={handleSubmit} openButtonText='Make an Offer' loading={loading}>
       <div className='field'>
         <input
           name='note'
@@ -62,4 +79,4 @@ export default function OffserModal({ service, serviceByUser }) {
       </div>
     </Modal>
   );
-}
+});

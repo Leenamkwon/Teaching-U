@@ -9,6 +9,7 @@ function ServiceDetails() {
   const dispatch = useDispatch();
   const { serviceId } = useParams();
   const { selectedService } = useSelector((state) => state.service);
+  const { currentUser } = useSelector((state) => state.auth);
   const { loading, error } = useSelector((state) => state.async);
 
   useEffect(() => {
@@ -40,7 +41,12 @@ function ServiceDetails() {
                 <h2 className='subtitle is-4'>{selectedService.description}</h2>
                 <br />
                 <div className='has-text-centered'>
-                  <OffserModal service={selectedService} serviceByUser={selectedService?.serviceByUser} />
+                  {currentUser.uid !== selectedService.hostedId && null}
+                  <OffserModal
+                    service={selectedService}
+                    serviceByUser={selectedService?.serviceByUser}
+                    currentUser={currentUser}
+                  />
                 </div>
               </div>
             </div>

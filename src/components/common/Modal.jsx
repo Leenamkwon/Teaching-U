@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Modal = ({ openButtonText, children, onModalSubmit }) => {
+const Modal = ({ openButtonText, children, onModalSubmit, loading }) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -23,8 +23,12 @@ const Modal = ({ openButtonText, children, onModalSubmit }) => {
           </header>
           <section className='modal-card-body'>{children}</section>
           <footer className='modal-card-foot'>
-            <button onClick={onModalSubmit ? () => onModalSubmit : null} className='button is-success'>
-              Save changes
+            <button
+              disabled={loading}
+              onClick={onModalSubmit ? () => onModalSubmit() : null}
+              className='button is-success'
+            >
+              {loading ? 'loading...' : 'Save changes'}
             </button>
             <button className='button' onClick={() => setIsActive(false)}>
               Cancel
