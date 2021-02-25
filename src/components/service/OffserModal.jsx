@@ -17,6 +17,7 @@ export default React.memo(function OffserModal({ service, serviceByUser, current
     price: 0,
   });
 
+  //
   function handleChange({ target: { value, name } }) {
     if (name === 'time') {
       const price = Math.round(value * service.price * 100) / 100;
