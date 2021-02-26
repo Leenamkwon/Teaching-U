@@ -6,9 +6,10 @@ import Routes from 'Routes';
 function ServiceApp() {
   return (
     <>
-      <Navbar id={null} />
+      <Navbar id='navbar-main' />
       <Navbar id='navbar-clone' />
       <Sidebar />
+      <Routes />
     </>
   );
 }

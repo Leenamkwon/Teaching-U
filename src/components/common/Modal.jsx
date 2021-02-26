@@ -25,7 +25,7 @@ const Modal = ({ openButtonText, children, onModalSubmit, loading }) => {
           <footer className='modal-card-foot'>
             <button
               disabled={loading}
-              onClick={onModalSubmit ? () => onModalSubmit() : null}
+              onClick={onModalSubmit ? () => onModalSubmit(() => setIsActive(false)) : null}
               className='button is-success'
             >
               {loading ? 'loading...' : 'Save changes'}

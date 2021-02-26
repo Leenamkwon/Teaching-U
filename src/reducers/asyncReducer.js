@@ -8,7 +8,7 @@ import {
 export default function isFetching(state = { loading: false, error: null }, { type, payload }) {
   switch (type) {
     case REQUEST_SERVICE:
-      return { ...state, loading: true, error: null };
+      return { ...state, loading: true };
     case FETCH_SERVICE_SUCCESS:
       return { ...state, loading: false };
     case END_SERVICE:

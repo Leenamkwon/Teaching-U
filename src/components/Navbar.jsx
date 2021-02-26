@@ -12,7 +12,7 @@ const Navbar = ({ id }) => {
       className='navbar is-fresh is-transparent no-shadow'
       role='navigation'
       aria-label='main navigation'
-      id={id}
+      id={id || ''}
     >
       <div className='container'>
         <div className='navbar-brand'>
@@ -93,6 +93,12 @@ const Navbar = ({ id }) => {
                   </Link>
                   <Link className='navbar-item' to='/services/me'>
                     Your Services
+                  </Link>
+                  <Link className='navbar-item' to='/offers/sent'>
+                    Sent Services
+                  </Link>
+                  <Link className='navbar-item' to='/offers/received'>
+                    Received Services
                   </Link>
                 </div>
               </div>

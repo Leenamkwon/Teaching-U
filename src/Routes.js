@@ -1,6 +1,6 @@
 import React from 'react';
-import Home from 'pages/Home';
 import { Switch, Route } from 'react-router-dom';
+import Home from 'pages/Home';
 import Faq from 'pages/Faq';
 import Profile from 'pages/Profile';
 import Services from 'pages/Services';
@@ -11,6 +11,8 @@ import PrivateRoute from 'pages/PrivateRoute';
 import PublicRoute from 'pages/PublicRoute';
 import ServiceCreate from 'pages/services/ServiceCreate';
 import UserServices from 'pages/services/UserServices';
+import SentOffers from 'pages/offers/SentOffer';
+import ReceivedOffers from 'pages/offers/ReceivedOffer';
 
 const Routes = () => {
   return (
@@ -22,6 +24,8 @@ const Routes = () => {
       <PrivateRoute exact path='/services/new' component={ServiceCreate} />
       <PrivateRoute exact path='/services/me' component={UserServices} />
       <Route path='/services/:serviceId' component={ServiceDetails} />
+      <PrivateRoute path='/offers/sent' component={SentOffers} />
+      <PrivateRoute path='/offers/received' component={ReceivedOffers} />
       <PublicRoute path='/login' component={Login} />
       <PublicRoute path='/register' component={Register} />
       <Route path='*' render={() => <div>404 ERROR NOT FOUND</div>} />

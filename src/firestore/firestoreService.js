@@ -5,6 +5,11 @@ const db = firebase.firestore();
 
 export const createRef = (collection, docId) => db.doc(`${collection}/${docId}`);
 
+/* 
+
+  SERVICE
+
+*/
 export async function listenToService() {
   const services = await db.collection('services').get();
   const serviceDataFromFirestore = services.docs.map((item) => ({ id: item.id, ...item.data() }));
@@ -16,7 +21,6 @@ export async function listenToSelectService(id) {
   return { id: service.id, ...service.data() };
 }
 
-// USER SERVICE
 export async function listenToUserService() {
   const uid = firebase.auth().currentUser.uid;
   try {
@@ -57,5 +61,11 @@ export const getUserProfile = ({ uid, dispatch }) => {
 OFFER
 
 */
-
 export const createOfferFirebase = (offer) => db.collection('offers').add(offer);
+
+export const fetchSentOffersFirebase = async (query) => {
+  const user = firebase.auth().currentUser;
+  const userRef = createRef('user', user.uid);
+  const snapshot = await db.collection('offers').where(query, '==', userRef).get();
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};

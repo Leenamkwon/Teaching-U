@@ -21,7 +21,6 @@ function App() {
     <>
       <ToastProvider>
         <ServiceApp />
-        <Routes />
       </ToastProvider>
     </>
   );

@@ -1,7 +1,7 @@
-import { createOffer } from 'actions/offerAction';
-import Modal from 'components/common/Modal';
-import { createRef } from 'firestore/firestoreService';
 import React, { useState } from 'react';
+import Modal from 'components/common/Modal';
+import { createOffer } from 'actions/offerAction';
+import { createRef } from 'firestore/firestoreService';
 import { useToasts } from 'react-toast-notifications';
 
 export default React.memo(function OffserModal({ service, serviceByUser, currentUser }) {
@@ -21,12 +21,12 @@ export default React.memo(function OffserModal({ service, serviceByUser, current
   function handleChange({ target: { value, name } }) {
     if (name === 'time') {
       const price = Math.round(value * service.price * 100) / 100;
-      return setOffer((prev) => ({ ...prev, time: name, price }));
+      return setOffer((prev) => ({ ...prev, time: parseInt(value, 10), price }));
     }
     return setOffer((prev) => ({ ...prev, [name]: value }));
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(closeModal) {
     const offerCopy = { ...offer };
     setLoading(true);
     try {
@@ -36,6 +36,7 @@ export default React.memo(function OffserModal({ service, serviceByUser, current
       await createOffer(offerCopy);
       addToast('Offer Success', { appearance: 'success', autoDismiss: true });
       setLoading(false);
+      closeModal();
     } catch (error) {
       addToast(error.message, { appearance: 'error', autoDismiss: true });
       setLoading(false);
