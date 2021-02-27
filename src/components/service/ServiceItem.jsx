@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function ServiceItem({ service, children, className }) {
+function ServiceItem({ service, children, className, noButton }) {
   const shortText = (text, maxLength = 50) => {
     if (!text) return;
     if (text.length <= maxLength) return text;
@@ -27,11 +27,13 @@ function ServiceItem({ service, children, className }) {
           <p>{shortText(service.description)}</p>
         </div>
         {children && <div className='card-text'>{children}</div>}
-        <div className='card-action'>
-          <Link to={`/services/${service.id}`} className='button btn-align-md accent-btn raised'>
-            Lean more
-          </Link>
-        </div>
+        {!noButton && (
+          <div className='card-action'>
+            <Link to={`/services/${service.id}`} className='button btn-align-md accent-btn raised'>
+              Lean more
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -69,3 +69,7 @@ export const fetchSentOffersFirebase = async (query) => {
   const snapshot = await db.collection('offers').where(query, '==', userRef).get();
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
+
+export const changeOfferStatusFirebase = (offer, status) => {
+  return db.collection('offers').doc(offer.id).update({ status });
+};

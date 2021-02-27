@@ -1,5 +1,9 @@
-import { createOfferFirebase, fetchSentOffersFirebase } from '../firestore/firestoreService';
-import { FETCH_OFFERS_SUCCESS } from './offerConstants';
+import {
+  changeOfferStatusFirebase,
+  createOfferFirebase,
+  fetchSentOffersFirebase,
+} from '../firestore/firestoreService';
+import { CHANGE_OFFER_STATUS, FETCH_OFFERS_SUCCESS } from './offerConstants';
 import { endService, errorService, requestService } from './serviceActions';
 
 export function createOffer(offer) {
@@ -7,6 +11,7 @@ export function createOffer(offer) {
 }
 
 async function extractDataFromOffer(offer, userType) {
+  userType === 'fromUser' ? (userType = 'toUser') : (userType = 'fromUser');
   const service = await offer.service.get();
   const user = await offer[userType].get();
 
@@ -20,10 +25,19 @@ export const fetchSentOffers = (query, offerType) => async (dispatch) => {
   dispatch(requestService());
   try {
     const sentOffers = await fetchSentOffersFirebase(query);
-    const mappedOffers = await Promise.all(
-      sentOffers.map((offer) => extractDataFromOffer(offer, 'fromUser'))
-    );
+    const mappedOffers = await Promise.all(sentOffers.map((offer) => extractDataFromOffer(offer, query)));
     dispatch({ type: FETCH_OFFERS_SUCCESS, payload: mappedOffers, offerType });
+    dispatch(endService());
+  } catch (error) {
+    dispatch(errorService());
+  }
+};
+
+export const changeOfferStatus = (offer, status) => async (dispatch) => {
+  dispatch(requestService());
+  try {
+    await changeOfferStatusFirebase(offer, status);
+    dispatch({ type: CHANGE_OFFER_STATUS, payload: offer.id, status, offerType: 'received' });
     dispatch(endService());
   } catch (error) {
     dispatch(errorService());
