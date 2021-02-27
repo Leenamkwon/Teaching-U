@@ -2,15 +2,29 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSentOffers } from 'actions/offerAction';
 import ServiceItem from 'components/service/ServiceItem';
+import { createCollaboration, createMessage } from '../../utils/offer';
+import { collaboration } from 'actions/collaborationAction';
+import { useToasts } from 'react-toast-notifications';
 
 const SentOffers = () => {
   const dispatch = useDispatch();
   const { sent } = useSelector((state) => state.offer);
-  // const { loading } = useSelector((state) => state.async);
+  const { currentUser } = useSelector((state) => state.auth);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     dispatch(fetchSentOffers('fromUser', 'sent'));
   }, [dispatch]);
+
+  async function handleCollaboration(offer) {
+    try {
+      const collaborationData = createCollaboration({ offer, fromUser: currentUser });
+      const messageData = createMessage({ offer, fromUser: currentUser });
+      dispatch(collaboration({ collaboration: collaborationData, message: messageData }));
+    } catch (error) {
+      addToast(error.message, { autoDismiss: true });
+    }
+  }
 
   return (
     <div className='container'>
@@ -36,6 +50,14 @@ const SentOffers = () => {
                     <span className='label'>Time:</span> {offer.time} hours
                   </div>
                 </div>
+                {offer.status === 'accepted' && !offer.collaborationCreated && (
+                  <div>
+                    <hr />
+                    <button onClick={() => handleCollaboration(offer)} className='button is-success'>
+                      Collaborate
+                    </button>
+                  </div>
+                )}
               </ServiceItem>
             ))}
           </div>

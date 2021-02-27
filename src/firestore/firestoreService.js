@@ -73,3 +73,21 @@ export const fetchSentOffersFirebase = async (query) => {
 export const changeOfferStatusFirebase = (offer, status) => {
   return db.collection('offers').doc(offer.id).update({ status });
 };
+
+export const markOfferAsInCollaboration = (offerId) => {
+  return db.collection('offers').doc(offerId).update({ collaborationCreated: true });
+};
+
+/* 
+
+COLLABORATION
+
+*/
+
+export const createCollaborationFirebase = (collab) => {
+  return db.collection('collaborations').add(collab);
+};
+
+export const createMessageFirebase = (message) => {
+  return db.collection('user').doc(message.toUser).collection('events').add(message);
+};

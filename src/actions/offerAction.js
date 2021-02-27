@@ -16,6 +16,7 @@ async function extractDataFromOffer(offer, userType) {
   const user = await offer[userType].get();
 
   offer.service = service.data();
+  offer.service.id = service.id;
   offer[userType] = user.data();
 
   return offer;
@@ -29,7 +30,7 @@ export const fetchSentOffers = (query, offerType) => async (dispatch) => {
     dispatch({ type: FETCH_OFFERS_SUCCESS, payload: mappedOffers, offerType });
     dispatch(endService());
   } catch (error) {
-    dispatch(errorService());
+    dispatch(errorService(error.message));
   }
 };
 
@@ -40,6 +41,6 @@ export const changeOfferStatus = (offer, status) => async (dispatch) => {
     dispatch({ type: CHANGE_OFFER_STATUS, payload: offer.id, status, offerType: 'received' });
     dispatch(endService());
   } catch (error) {
-    dispatch(errorService());
+    dispatch(errorService(error.message));
   }
 };
