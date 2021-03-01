@@ -21,6 +21,7 @@ export const createMessage = ({ offer: { service, toUser }, fromUser }) => ({
   toUser: toUser.uid, // 메세지를 받는 사람
   fromUser: {
     // 메세지를 보내는 사람
+    id: fromUser.uid,
     name: fromUser.fullName,
     avatar: fromUser.avatar,
   },
