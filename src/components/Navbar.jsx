@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signoutFirebase } from 'firestore/firebaseService';
+import ReceivedMessage from './ReceivedMessage';
 
 const Navbar = ({ id }) => {
   const { currentUser, authenticated } = useSelector((state) => state.auth);
@@ -84,24 +85,30 @@ const Navbar = ({ id }) => {
               FaQ
             </Link>
             {authenticated && (
-              <div className='navbar-item has-dropdown is-hoverable'>
-                <a className='navbar-link'>관리</a>
+              <>
+                <div className='navbar-item has-dropdown is-hoverable'>
+                  <a className='navbar-link'>관리</a>
 
-                <div className='navbar-dropdown'>
-                  <Link className='navbar-item' to='/services/new'>
-                    Create Service
-                  </Link>
-                  <Link className='navbar-item' to='/services/me'>
-                    Your Services
-                  </Link>
-                  <Link className='navbar-item' to='/offers/sent'>
-                    Sent Services
-                  </Link>
-                  <Link className='navbar-item' to='/offers/received'>
-                    Received Services
-                  </Link>
+                  <div className='navbar-dropdown'>
+                    <Link className='navbar-item' to='/services/new'>
+                      Create Service
+                    </Link>
+                    <Link className='navbar-item' to='/services/me'>
+                      Your Services
+                    </Link>
+                    <Link className='navbar-item' to='/offers/sent'>
+                      Sent Services
+                    </Link>
+                    <Link className='navbar-item' to='/offers/received'>
+                      Received Services
+                    </Link>
+                  </div>
                 </div>
-              </div>
+                <div className='navbar-item has-dropdown is-hoverable'>
+                  <a className='navbar-link'>메세지</a>
+                  <div className='navbar-dropdown navbar-dropdown-messages'>{<ReceivedMessage />}</div>
+                </div>
+              </>
             )}
             {!authenticated && (
               <>

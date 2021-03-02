@@ -13,10 +13,10 @@ export const createCollaboration = ({ offer: { service, time, toUser, id }, from
   createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
 });
 
-export const createMessage = ({ offer: { service, toUser }, fromUser }) => ({
+export const createMessage = ({ offer: { service, toUser, note }, fromUser }) => ({
   isRead: false,
   type: 'invitation',
-  text: `Hello ${toUser.fullName}, please join collaboration as soon as possible`,
+  text: note,
   cta: '',
   toUser: toUser.uid, // 메세지를 받는 사람
   fromUser: {

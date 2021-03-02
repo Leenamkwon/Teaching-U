@@ -32,6 +32,20 @@ $section-grey: #fbfbfb;
 @import './styles/auth.scss';
 @import './styles/services.scss';
 
+.navbar-dropdown-messages {
+  min-width: 320px !important;
+  right: -150% !important;
+  left: unset;
+
+  .from-user {
+    padding-left: 20px;
+  }
+
+  .navbar-item-messages {
+    white-space: inherit;
+  }
+}
+
 /* Modal */
 .modal {
   text-align: left !important;

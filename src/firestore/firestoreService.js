@@ -52,14 +52,11 @@ export const getUserProfile = ({ uid, dispatch }) => {
     .onSnapshot((snapshot) => {
       if (!snapshot.exists) return;
       dispatch(signInUser(snapshot.data()));
-      dispatch({ type: 'APP_LOADED' });
     });
 };
 
 /* 
-
 OFFER
-
 */
 export const createOfferFirebase = (offer) => db.collection('offers').add(offer);
 
@@ -74,20 +71,37 @@ export const changeOfferStatusFirebase = (offer, status) => {
   return db.collection('offers').doc(offer.id).update({ status });
 };
 
+/* 
+COLLABORATION
+*/
 export const markOfferAsInCollaboration = (offerId) => {
   return db.collection('offers').doc(offerId).update({ collaborationCreated: true });
 };
-
-/* 
-
-COLLABORATION
-
-*/
 
 export const createCollaborationFirebase = (collab) => {
   return db.collection('collaborations').add(collab);
 };
 
 export const createMessageFirebase = (message) => {
+  console.log(message);
   return db.collection('user').doc(message.toUser).collection('events').add(message);
+};
+
+export const subscribeToMessageFirebase = (userId, callback) => {
+  return db
+    .collection('user')
+    .doc(userId)
+    .collection('events')
+    .onSnapshot((snapshot) => {
+      const message = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      callback(message);
+    });
+};
+
+export const markMessageAsReadFirebase = (message) => {
+  const user = firebase.auth().currentUser;
+  return db.collection('user').doc(user.uid).collection('events').doc(message.id).update({ isRead: true });
 };

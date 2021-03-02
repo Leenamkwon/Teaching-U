@@ -21,6 +21,7 @@ const SentOffers = () => {
       const collaborationData = createCollaboration({ offer, fromUser: currentUser });
       const messageData = createMessage({ offer, fromUser: currentUser });
       dispatch(collaboration({ collaboration: collaborationData, message: messageData }));
+      addToast('콜라보레이션', { appearance: 'success', autoDismiss: true });
     } catch (error) {
       addToast(error.message, { autoDismiss: true });
     }
