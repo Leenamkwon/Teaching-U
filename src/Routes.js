@@ -13,23 +13,27 @@ import ServiceCreate from 'pages/services/ServiceCreate';
 import UserServices from 'pages/services/UserServices';
 import SentOffers from 'pages/offers/SentOffer';
 import ReceivedOffers from 'pages/offers/ReceivedOffer';
+import ReceivedCollaboration from 'pages/ReceivedCollaboration';
 
 const Routes = () => {
   return (
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <PrivateRoute path='/faq' component={Faq} />
-      <Route path='/profile' component={Profile} />
-      <Route exact path='/services' component={Services} />
-      <PrivateRoute exact path='/services/new' component={ServiceCreate} />
-      <PrivateRoute exact path='/services/me' component={UserServices} />
-      <Route path='/services/:serviceId' component={ServiceDetails} />
-      <PrivateRoute path='/offers/sent' component={SentOffers} />
-      <PrivateRoute path='/offers/received' component={ReceivedOffers} />
-      <PublicRoute path='/login' component={Login} />
-      <PublicRoute path='/register' component={Register} />
-      <Route path='*' render={() => <div>404 ERROR NOT FOUND</div>} />
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <PrivateRoute path='/faq' component={Faq} />
+        <Route path='/profile' component={Profile} />
+        <Route exact path='/services' component={Services} />
+        <PrivateRoute exact path='/services/new' component={ServiceCreate} />
+        <PrivateRoute exact path='/services/me' component={UserServices} />
+        <Route path='/services/:serviceId' component={ServiceDetails} />
+        <PrivateRoute path='/collaboration/me' component={ReceivedCollaboration} />
+        <PrivateRoute path='/offers/sent' component={SentOffers} />
+        <PrivateRoute path='/offers/received' component={ReceivedOffers} />
+        <PublicRoute path='/login' component={Login} />
+        <PublicRoute path='/register' component={Register} />
+        <Route path='*' render={() => <div>404 ERROR NOT FOUND</div>} />
+      </Switch>
+    </>
   );
 };
 

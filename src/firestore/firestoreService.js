@@ -105,3 +105,10 @@ export const markMessageAsReadFirebase = (message) => {
   const user = firebase.auth().currentUser;
   return db.collection('user').doc(user.uid).collection('events').doc(message.id).update({ isRead: true });
 };
+
+export const fetchCollaborationsFirebase = (userId) =>
+  db
+    .collection('collaborations')
+    .where('allowedPeople', 'array-contains', userId)
+    .get()
+    .then((snapshot) => snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));

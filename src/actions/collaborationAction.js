@@ -4,6 +4,7 @@ import {
   markOfferAsInCollaboration,
   subscribeToMessageFirebase,
   markMessageAsReadFirebase,
+  fetchCollaborationsFirebase,
 } from '../firestore/firestoreService';
 import { APP_LOADED } from './authConstants';
 import { FETCH_USER_MESSAGE_SUCCESS } from './collaborationConstants';
@@ -36,4 +37,9 @@ export const subscribeToMessage = (userId) => async (dispatch) => {
 
 export const markMessageAsRead = (message) => async () => {
   await markMessageAsReadFirebase(message);
+};
+
+export const fetchCollaborations = (userId) => async () => {
+  const collaborationDoc = await fetchCollaborationsFirebase(userId);
+  return collaborationDoc;
 };

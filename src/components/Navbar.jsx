@@ -9,12 +9,7 @@ const Navbar = ({ id }) => {
   const { currentUser, authenticated } = useSelector((state) => state.auth);
 
   return (
-    <nav
-      className='navbar is-fresh is-transparent no-shadow'
-      role='navigation'
-      aria-label='main navigation'
-      id={id || ''}
-    >
+    <nav className='navbar is-fresh is-transparent no-shadow' role='navigation' aria-label='main navigation' id={id || ''}>
       <div className='container'>
         <div className='navbar-brand'>
           <Link to='/' className='navbar-item'>
@@ -38,13 +33,7 @@ const Navbar = ({ id }) => {
             </div>
           </a>
 
-          <a
-            role='button'
-            className='navbar-burger'
-            aria-label='menu'
-            aria-expanded='false'
-            data-target='navbar-menu'
-          >
+          <a role='button' className='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbar-menu'>
             <span aria-hidden='true'></span>
             <span aria-hidden='true'></span>
             <span aria-hidden='true'></span>
@@ -72,9 +61,7 @@ const Navbar = ({ id }) => {
           </div>
 
           <div className='navbar-end'>
-            {authenticated && (
-              <div className='navbar-item is-secondary user-welcome'>{`Hi ${currentUser.fullName}`}</div>
-            )}
+            {authenticated && <div className='navbar-item is-secondary user-welcome'>{`Hi ${currentUser.fullName}`}</div>}
             <Link to='/' className='navbar-item is-secondary'>
               홈
             </Link>
@@ -101,6 +88,9 @@ const Navbar = ({ id }) => {
                     </Link>
                     <Link className='navbar-item' to='/offers/received'>
                       Received Services
+                    </Link>
+                    <Link className='navbar-item' to='/collaboration/me'>
+                      Received Collaboration
                     </Link>
                   </div>
                 </div>

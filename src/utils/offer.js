@@ -7,6 +7,7 @@ export const createCollaboration = ({ offer: { service, time, toUser, id }, from
   time: time * 60 * 60,
   allowedPeople: [fromUser.uid, toUser.uid],
   joined: [],
+  status: 'pending',
   toUser: toUser.uid,
   fromOffer: id, // 게시물 올린 사람
   fromUser: fromUser.uid, // 신청하는 사람
