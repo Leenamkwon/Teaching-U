@@ -1,8 +1,4 @@
-import {
-  CHANGE_OFFER_STATUS,
-  COLLABORATION_CREATED_FROM_OFFER,
-  FETCH_OFFERS_SUCCESS,
-} from 'actions/offerConstants';
+import { CHANGE_OFFER_STATUS, COLLABORATION_CREATED_FROM_OFFER, FETCH_OFFERS_SUCCESS } from 'actions/offerConstants';
 import { combineReducers } from 'redux';
 
 function createOfferList(defaultOfferType) {

@@ -1,11 +1,17 @@
 import { markMessageAsRead } from 'actions/collaborationAction';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function ReceivedMessage() {
   const dispatch = useDispatch();
   const { messages } = useSelector((state) => state.auth);
+  const history = useHistory();
+
+  function goToCollaboration(message) {
+    markMessageAsRead(message);
+    history.push(`${message.cta}`);
+  }
 
   function renderMessage() {
     if (messages.filter((msg) => !msg.isRead).length === 0) {
@@ -24,9 +30,9 @@ export default function ReceivedMessage() {
           <div className='navbar-item navbar-item-messages'>
             {msg.text}
             <div style={{ display: 'block' }}>
-              <Link onClick={() => {}} to={msg.cta}>
+              <button onClick={() => goToCollaboration(msg)}>
                 <div className='button is-success'>Join</div>
-              </Link>
+              </button>
               <button onClick={() => dispatch(markMessageAsRead(msg))} className='button is-warning'>
                 Later
               </button>

@@ -46,15 +46,6 @@ export const createUserProfile = (userProfile) => {
   db.collection('user').doc(userProfile.uid).set(userProfile);
 };
 
-export const getUserProfile = ({ uid, dispatch }) => {
-  db.collection('user')
-    .doc(uid)
-    .onSnapshot((snapshot) => {
-      if (!snapshot.exists) return;
-      dispatch(signInUser(snapshot.data()));
-    });
-};
-
 /* 
 OFFER
 */
@@ -97,6 +88,7 @@ export const subscribeToMessageFirebase = (userId, callback) => {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log(message);
       callback(message);
     });
 };

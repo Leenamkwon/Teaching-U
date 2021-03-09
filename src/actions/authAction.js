@@ -1,7 +1,6 @@
 import { registerFirebase } from '../firestore/firebaseService';
-import { getUserProfile } from '../firestore/firestoreService';
-import { APP_LOADED, SIGN_IN_USER, SIGN_OUT_USER } from './authConstants';
 import firebase from '../config/firebase';
+import { APP_LOADED, SIGN_IN_USER, SIGN_OUT_USER } from './authConstants';
 import { subscribeToMessage } from './collaborationAction';
 
 // NOT ACTIONS
@@ -21,15 +20,21 @@ export function signOutUser() {
 }
 
 export function verifyAuth() {
-  let subscribeMessage;
   return function (dispatch) {
-    return firebase.auth().onAuthStateChanged(
+    firebase.auth().onAuthStateChanged(
       (user) => {
         if (user) {
-          getUserProfile({ uid: user.uid, dispatch: (action) => dispatch(action) });
-          subscribeMessage = dispatch(subscribeToMessage(user.uid));
+          firebase
+            .firestore()
+            .collection('user')
+            .doc(user.uid)
+            .onSnapshot((snapshot) => {
+              if (!snapshot.exists) return;
+              dispatch(signInUser(snapshot.data()));
+              dispatch({ type: APP_LOADED });
+            });
+          dispatch(subscribeToMessage(user.uid));
         } else {
-          subscribeMessage();
           dispatch(signOutUser());
           dispatch({ type: APP_LOADED });
         }

@@ -13,7 +13,8 @@ import ServiceCreate from 'pages/services/ServiceCreate';
 import UserServices from 'pages/services/UserServices';
 import SentOffers from 'pages/offers/SentOffer';
 import ReceivedOffers from 'pages/offers/ReceivedOffer';
-import ReceivedCollaboration from 'pages/ReceivedCollaboration';
+import ReceivedCollaboration from 'pages/collaborations/ReceivedCollaboration';
+import CollaborationDetail from 'pages/collaborations/CollaborationDetail';
 
 const Routes = () => {
   return (
@@ -26,9 +27,10 @@ const Routes = () => {
         <PrivateRoute exact path='/services/new' component={ServiceCreate} />
         <PrivateRoute exact path='/services/me' component={UserServices} />
         <Route path='/services/:serviceId' component={ServiceDetails} />
-        <PrivateRoute path='/collaboration/me' component={ReceivedCollaboration} />
         <PrivateRoute path='/offers/sent' component={SentOffers} />
         <PrivateRoute path='/offers/received' component={ReceivedOffers} />
+        <PrivateRoute path='/collaboration/me' component={ReceivedCollaboration} />
+        <PrivateRoute path='/collaboration/:id' component={CollaborationDetail} />
         <PublicRoute path='/login' component={Login} />
         <PublicRoute path='/register' component={Register} />
         <Route path='*' render={() => <div>404 ERROR NOT FOUND</div>} />

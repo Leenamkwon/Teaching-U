@@ -6,7 +6,6 @@ import {
   markMessageAsReadFirebase,
   fetchCollaborationsFirebase,
 } from '../firestore/firestoreService';
-import { APP_LOADED } from './authConstants';
 import { FETCH_USER_MESSAGE_SUCCESS } from './collaborationConstants';
 import { COLLABORATION_CREATED_FROM_OFFER } from './offerConstants';
 
@@ -28,10 +27,9 @@ export function collaboration({ collaboration, message }) {
   };
 }
 
-export const subscribeToMessage = (userId) => async (dispatch) => {
+export const subscribeToMessage = (userId) => (dispatch) => {
   return subscribeToMessageFirebase(userId, (message) => {
     dispatch({ type: FETCH_USER_MESSAGE_SUCCESS, payload: message });
-    dispatch({ type: APP_LOADED });
   });
 };
 
