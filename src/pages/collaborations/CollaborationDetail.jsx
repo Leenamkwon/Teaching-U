@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router';
+import { subToCollaboration } from 'actions/collaborationAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function CollaborationDetail() {
+  const { collaboration, joined, messages } = useSelector((state) => state.collaboration);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const unsubscribe = useRef(null);
+
+  useEffect(() => {
+    unsubscribe.current = dispatch(subToCollaboration(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    return () => {
+      unsubscribe.current();
+    };
+  }, []);
+
   return (
     <div className='content-wrapper'>
       <div className='root'>

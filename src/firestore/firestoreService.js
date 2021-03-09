@@ -103,3 +103,14 @@ export const fetchCollaborationsFirebase = (userId) =>
     .where('allowedPeople', 'array-contains', userId)
     .get()
     .then((snapshot) => snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+
+export const subToCollaborationFirebase = (collabId, done) => {
+  return db
+    .collection('collaborations')
+    .doc(collabId)
+    .onSnapshot((snapshot) => {
+      if (!snapshot.exists) return;
+      const collab = { id: snapshot.id, ...snapshot.data() };
+      done(collab);
+    });
+};

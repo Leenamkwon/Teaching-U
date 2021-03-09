@@ -3,6 +3,7 @@ import asyncReducer from 'reducers/asyncReducer';
 import { combineReducers } from 'redux';
 import { authReducer } from 'reducers/authReducer';
 import { offers } from 'reducers/offerReducer';
+import initCollaboraions from 'reducers/collaborationReducer';
 
 export default function rootReducer() {
   return combineReducers({
@@ -10,5 +11,6 @@ export default function rootReducer() {
     async: asyncReducer,
     auth: authReducer,
     offer: offers,
+    collaboration: initCollaboraions(),
   });
 }
