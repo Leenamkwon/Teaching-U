@@ -1,5 +1,4 @@
 import firebase from 'config/firebase';
-import { signInUser } from 'actions/authAction';
 
 const db = firebase.firestore();
 

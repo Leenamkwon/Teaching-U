@@ -2,6 +2,7 @@ import { registerFirebase } from '../firestore/firebaseService';
 import firebase from '../config/firebase';
 import { APP_LOADED, SIGN_IN_USER, SIGN_OUT_USER } from './authConstants';
 import { subscribeToMessage } from './collaborationAction';
+import { checkUserConnection } from 'actions/connection';
 
 // NOT ACTIONS
 export function register(payload) {
@@ -28,12 +29,14 @@ export function verifyAuth() {
             .firestore()
             .collection('user')
             .doc(user.uid)
-            .onSnapshot((snapshot) => {
-              if (!snapshot.exists) return;
-              dispatch(signInUser(snapshot.data()));
+            .get()
+            .then((res) => {
+              const auth = res.data();
+              dispatch(signInUser(auth));
+              checkUserConnection(user.uid);
+              dispatch(subscribeToMessage(user.uid));
               dispatch({ type: APP_LOADED });
             });
-          dispatch(subscribeToMessage(user.uid));
         } else {
           dispatch(signOutUser());
           dispatch({ type: APP_LOADED });

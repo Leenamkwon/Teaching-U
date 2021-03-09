@@ -1,7 +1,7 @@
-import { markMessageAsRead } from 'actions/collaborationAction';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { markMessageAsRead } from 'actions/collaborationAction';
 
 export default function ReceivedMessage() {
   const dispatch = useDispatch();
@@ -9,8 +9,8 @@ export default function ReceivedMessage() {
   const history = useHistory();
 
   function goToCollaboration(message) {
-    markMessageAsRead(message);
-    history.push(`${message.cta}`);
+    // markMessageAsRead(message);
+    history.push(message.cta);
   }
 
   function renderMessage() {

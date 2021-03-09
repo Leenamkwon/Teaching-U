@@ -19,25 +19,25 @@ export default function CollaborationDetail() {
             <div className='viewChatBoard'>
               <div className='headerChatBoard'>
                 <img className='viewAvatarItem' src='https://i.imgur.com/cVDadwb.png' alt='icon avatar' />
-                <span class='textHeaderChatBoard'>Filip Jerga</span>
+                <span className='textHeaderChatBoard'>Filip Jerga</span>
               </div>
               <div className='viewListContentChat'>
-                <div class='viewWrapItemLeft'>
-                  <div class='viewWrapItemLeft3'>
-                    <img src='https://i.imgur.com/cVDadwb.png' alt='avatar' class='peerAvatarLeft' />
-                    <div class='viewItemLeft'>
-                      <span class='textContentItem'>hey</span>
+                <div className='viewWrapItemLeft'>
+                  <div className='viewWrapItemLeft3'>
+                    <img src='https://i.imgur.com/cVDadwb.png' alt='avatar' className='peerAvatarLeft' />
+                    <div className='viewItemLeft'>
+                      <span className='textContentItem'>hey</span>
                     </div>
                   </div>
-                  <span class='textTimeLeft'>Oct 31, 2019</span>
+                  <span className='textTimeLeft'>Oct 31, 2019</span>
                 </div>
-                <div class='viewItemRight'>
-                  <span class='textContentItem'>hey</span>
+                <div className='viewItemRight'>
+                  <span className='textContentItem'>hey</span>
                 </div>
                 <div style={{ float: 'left', clear: 'both' }}></div>
               </div>
               <div className='viewBottom'>
-                <input className='viewInput' placeholder='Type your message...' value='' />
+                <input className='viewInput' placeholder='Type your message...' value='' onChange={() => {}} />
               </div>
             </div>
           </div>

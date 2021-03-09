@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Spinner from 'components/Spinner';
 
 function App() {
-  const { initialLoad, authenticated } = useSelector((state) => state.auth);
+  const { initialLoad } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {

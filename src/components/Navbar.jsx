@@ -89,7 +89,7 @@ const Navbar = ({ id }) => {
                     <Link className='navbar-item' to='/offers/received'>
                       Received Services
                     </Link>
-                    <Link className='navbar-item' to='/collaboration/me'>
+                    <Link className='navbar-item' to='/collaborations/me'>
                       Received Collaboration
                     </Link>
                   </div>

@@ -1,6 +1,6 @@
 import firebase from 'config/firebase';
-import { signInUser, signOutUser } from 'actions/authAction';
-import { createUserProfile, getUserProfile } from './firestoreService';
+import { createFirebaseRef } from './connection';
+import { createUserProfile } from './firestoreService';
 
 export const registerFirebase = async ({ email, password, fullName, avatar }) => {
   try {
@@ -18,17 +18,10 @@ export const loginFirebase = (email, password) => {
 };
 
 export const signoutFirebase = async () => {
-  await firebase.auth().signOut();
-};
-
-export const onAuthStateChange = (dispatch) => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log(user);
-      getUserProfile({ uid: user.uid, dispatch: (data) => dispatch(signInUser(data)) });
-    } else {
-      console.log(user);
-      dispatch(signOutUser());
-    }
+  const user = firebase.auth().currentUser;
+  await createFirebaseRef('status', user.uid).set({
+    state: 'offline',
+    last_changed: firebase.database.ServerValue.TIMESTAMP,
   });
+  await firebase.auth().signOut();
 };

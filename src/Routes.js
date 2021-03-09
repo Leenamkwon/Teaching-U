@@ -29,8 +29,8 @@ const Routes = () => {
         <Route path='/services/:serviceId' component={ServiceDetails} />
         <PrivateRoute path='/offers/sent' component={SentOffers} />
         <PrivateRoute path='/offers/received' component={ReceivedOffers} />
-        <PrivateRoute path='/collaboration/me' component={ReceivedCollaboration} />
-        <PrivateRoute path='/collaboration/:id' component={CollaborationDetail} />
+        <PrivateRoute path='/collaborations/me' component={ReceivedCollaboration} />
+        <PrivateRoute path='/collaborations/:id' component={CollaborationDetail} />
         <PublicRoute path='/login' component={Login} />
         <PublicRoute path='/register' component={Register} />
         <Route path='*' render={() => <div>404 ERROR NOT FOUND</div>} />
