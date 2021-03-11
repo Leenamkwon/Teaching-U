@@ -1,8 +1,12 @@
-import { SET_COLLABORATION, SET_COLLABORATION_JOINED_PEOPLE } from 'actions/collaborationConstants';
+import {
+  SET_COLLABORATION,
+  SET_COLLABORATION_JOINED_PEOPLE,
+  SET_COLLABORATION_MESSAGE,
+} from 'actions/collaborationConstants';
 import { combineReducers } from 'redux';
 
 const initCollaboraions = () => {
-  const collaboration = (state = {}, { type, payload }) => {
+  const collaboration = (state = null, { type, payload }) => {
     switch (type) {
       case SET_COLLABORATION:
         return payload;
@@ -16,19 +20,28 @@ const initCollaboraions = () => {
     switch (type) {
       case SET_COLLABORATION_JOINED_PEOPLE:
         return payload;
-
+      case 'LEFT_COLLABORATION':
+        const clone = state.filter((item) => item.uid !== payload);
+        return clone;
       default:
         return state;
     }
   };
 
   const messages = (state = [], { type, payload }) => {
-    return {};
+    switch (type) {
+      case SET_COLLABORATION_MESSAGE:
+        return [...state, ...payload];
+      case 'LEFT_COLLABORATION':
+        return [];
+      default:
+        return state;
+    }
   };
 
   return combineReducers({
     collaboration,
-    joined: joinedPeople,
+    joinedPeople: joinedPeople,
     messages,
   });
 };

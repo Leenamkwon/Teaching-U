@@ -6,9 +6,12 @@ import {
   markMessageAsReadFirebase,
   fetchCollaborationsFirebase,
   subToCollaborationFirebase,
+  joinCollaborationFirebase,
+  leftCollaborationFirebase,
 } from '../firestore/firestoreService';
 import { FETCH_USER_MESSAGE_SUCCESS, SET_COLLABORATION, SET_COLLABORATION_JOINED_PEOPLE } from './collaborationConstants';
 import { COLLABORATION_CREATED_FROM_OFFER } from './offerConstants';
+import { ERROR_SERVICE } from './serviceActionsConstants';
 
 export function collaboration({ collaboration, message }) {
   return async function (dispatch) {
@@ -43,18 +46,39 @@ export const fetchCollaborations = (userId) => async () => {
   return collaborationDoc;
 };
 
-export const subToCollaboration = (collabId) => (dispatch) =>
-  subToCollaborationFirebase(collabId, async (collaboration) => {
+export const subToCollaboration = (collabId) => (dispatch) => {
+  return subToCollaborationFirebase(collabId, async (collaboration) => {
     let joinedPeople = [];
 
-    if (collaboration.joined) {
+    if (!collaboration) {
+      return dispatch({ type: ERROR_SERVICE, payload: 'not found collaboration' });
+    }
+
+    if (collaboration.joined.length > 0) {
       joinedPeople = await Promise.all(
         collaboration.joined.map(async (userRef) => {
           const userSnapshot = await userRef.get();
-          return { id: userSnapshot.id, ...userSnapshot.data() };
+          return { ...userSnapshot.data() };
         })
       );
     }
+
     dispatch({ type: SET_COLLABORATION, payload: collaboration });
     dispatch({ type: SET_COLLABORATION_JOINED_PEOPLE, payload: joinedPeople });
   });
+};
+
+export const joinCollaboration = (collabId, uid) => {
+  return joinCollaborationFirebase(collabId, uid);
+};
+
+export const leftCollaboration = (collabId, uid) => (dispatch) => {
+  leftCollaborationFirebase(collabId, uid);
+  dispatch({ type: 'LEFT_COLLABORATION', payload: uid });
+};
+
+export const subscribeUserStatusFirebase = (uid) => {
+  return subscribeUserStatusFirebase(uid, (user) => {
+    console.log(user);
+  });
+};

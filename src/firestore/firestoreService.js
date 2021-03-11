@@ -108,9 +108,44 @@ export const subToCollaborationFirebase = (collabId, done) => {
   return db
     .collection('collaborations')
     .doc(collabId)
+    .onSnapshot(
+      (snapshot) => {
+        if (!snapshot.exists) return done(null);
+        const collab = { id: snapshot.id, ...snapshot.data() };
+        done(collab);
+      },
+      (error) => {
+        console.log(error, 'error');
+        done(null);
+      }
+    );
+};
+
+// 채팅방 입장
+export const joinCollaborationFirebase = async (collabId, uid) => {
+  const userRef = createRef('user', uid);
+  return await db
+    .collection('collaborations')
+    .doc(collabId)
+    .update({ joined: firebase.firestore.FieldValue.arrayUnion(userRef) });
+};
+
+// 채팅방 나감
+export const leftCollaborationFirebase = (collabId, uid) => {
+  const userRef = createRef('user', uid);
+  db.collection('collaborations')
+    .doc(collabId)
+    .update({ joined: firebase.firestore.FieldValue.arrayRemove(userRef) });
+};
+
+// 프로필 변경 감지
+export const subscribeUserStatusFirebase = (uid, done) => {
+  return db
+    .collection('user')
+    .doc(uid)
     .onSnapshot((snapshot) => {
       if (!snapshot.exists) return;
-      const collab = { id: snapshot.id, ...snapshot.data() };
-      done(collab);
+      const user = { ...snapshot.data() };
+      done(user);
     });
 };
